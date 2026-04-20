@@ -55,9 +55,9 @@ st.markdown("### 🧠 Insights")
 
 current_price = filtered_df.iloc[0, 1]
 
-if current_price > 2.1:
+if current_price > 2.0:
     st.warning("Current fuel prices are highly elevated compared to historical levels.")
-elif 1.7 < current_price < 2.1:
+elif 1.7 < current_price < 2.0:
     st.warning("Current fuel prices are elevated compared to historical levels.")
 else:
     st.success("Current fuel prices are relatively stable compared to historical levels.")
