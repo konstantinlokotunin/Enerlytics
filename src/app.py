@@ -16,7 +16,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.title("⚡ Enerlytics Dashboard")
+st.title("⚡🌍 Enerlytics — Energy Data Platform")
 st.markdown("#### European Energy Market Intelligence")
 
 st.markdown("---")
