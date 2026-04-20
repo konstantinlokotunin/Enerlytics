@@ -58,7 +58,7 @@ elif 1.7 < avg_price < 2.1:
 else:
     st.success("Current gasoline prices are relatively stable compared to historical levels.")
 
-tab1 st.tabs(["📈 Dashboard"])
+tab1 st.tabs("📈 Dashboard")
 
 with tab1:
     st.markdown("### 📈 Fuel Price Trends")
