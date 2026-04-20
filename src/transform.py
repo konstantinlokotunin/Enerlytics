@@ -1,46 +1,105 @@
+import matplotlib.pyplot as plt
+import seaborn as sns
+import matplotlib.dates as mdates
 import pandas as pd
 
-def transform_data(df):
+sns.set_theme(style="white", context="talk")
 
-    # --- Flatten MultiIndex columns ---
-    df.columns = [
-        "_".join(
-            str(level).strip()
-            for level in col
-            if "Unnamed" not in str(level)
-        )
-        for col in df.columns
-    ]
+def style_ax(ax):
+    # Background
+    ax.set_facecolor("#EDF3FD")  # white smoke
 
-    # --- Rename first column to date ---
-    df = df.rename(columns={df.columns[0]: "Date"})
+    # Grid (subtle, vertical only)
+    ax.grid(True, axis="y", color="#9ca3af", linestyle="--", alpha=0.4)
 
-    # --- Clean date ---
-    df = df.dropna(subset=["Date"])
-    df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
+    # Customize spines
+    sns.despine(ax=ax, left=False, bottom=False)
 
-    # --- Filter time range ---
-    df = df[df["Date"].between("2020-01-01", "2026-12-31")]
+    for spine in ["left", "bottom", "right", "top"]:
+        ax.spines[spine].set_linewidth(1.25)
+        ax.spines[spine].set_color("#9ca3af")
 
-    # --- Select relevant columns (pattern-based instead of hardcoding) ---
-    relevant_cols = [col for col in df.columns if any(
-        key in col for key in [
-            "EU_price_with_tax_euro95",
-            "EU_price_with_tax_diesel",
-            "AT_price_with_tax_euro95",
-            "AT_price_with_tax_diesel"]
-    )]
+    # Tick styling
+    ax.tick_params(axis='x', labelsize=11, rotation=30)
+    ax.tick_params(axis='y', labelsize=12)
 
-    df = df[["Date"] + relevant_cols]
+    # Labels
+    ax.yaxis.label.set_color("#242424")
+    ax.xaxis.label.set_color("#242424")
+    ax.set_ylabel("€/L", fontsize=14)
 
-    df[relevant_cols] = df[relevant_cols] / 1000
+    # Title
+    ax.title.set_color("#242424")
+    
+    # Grid
+    ax.legend(
+        frameon=False,
+        ncol=2,
+        fontsize=10,
+        loc="upper left"
+    )
 
-    # --- Rename columns cleanly ---
-    rename_col = {
-        col: col.split("_")[0] + "_" + ("Diesel Price (€/L)" if "diesel" in col.lower() else "Gasoline Price (€/L)")
-        for col in relevant_cols
+def visualize_data(df, window=4):
+
+    fig, ax = plt.subplots(figsize=(16, 7))
+
+    # --- COLOR SYSTEM (by country) ---
+    COLORS = {
+        "EU": "#2563EB",   # blue
+        "AT": "#FF3366",   # red
+        "DE": "#011627"    # black
     }
 
-    df = df.rename(columns=rename_col)
+    # --- PLOT (grouped logic) ---
+    for col in df.columns:
+        if col == "Date":
+            continue
 
-    return df
+        country = col.split("_")[0]   # EU, AT
+
+        if "Gasoline" in col:
+            linestyle = "-"
+            alpha = 1
+        else:
+            linestyle = "--"
+            alpha = 0.9
+
+        ax.plot(
+            df["Date"],
+            df[col].rolling(window).mean(),
+            label=col.replace("_", " "),
+            color=COLORS[country],
+            linewidth=2.2,
+            linestyle=linestyle,
+            alpha=alpha
+        )
+
+    # --- TITLE ---
+    ax.set_title(
+        "Fuel Prices in Europe (EU vs Austria)",
+        fontsize=18,
+        pad=15,
+        weight="bold"
+    )
+
+    # --- Y RANGE ---
+    y_min = df.drop(columns=["Date"]).min().min()
+    y_max = df.drop(columns=["Date"]).max().max()
+    ax.set_ylim(y_min - 0.05, y_max + 0.05)
+
+    # --- X AXIS (CLEANER) ---
+    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+
+    ax.axvspan(pd.Timestamp("2022-02-24"), pd.Timestamp("2023-01-01"),
+        color="#535C65", alpha=0.1, label="Ukraine war")
+    
+    ax.axvspan(pd.Timestamp("2026-02-28"), pd.Timestamp("2026-04-13"),
+        color="#535C65", alpha=0.1, label="2026 Iran war")
+
+    style_ax(ax)
+
+    plt.tight_layout()
+
+    return fig
+
