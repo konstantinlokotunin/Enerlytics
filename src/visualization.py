@@ -39,7 +39,7 @@ def style_ax(ax):
         loc="upper left"
     )
 
-def visualize_data(df):
+def visualize_data(df, window=4):
 
     fig, ax = plt.subplots(figsize=(12, 6))
 
@@ -66,7 +66,7 @@ def visualize_data(df):
 
         ax.plot(
             df["Date"],
-            df[col].rolling(4).mean(),
+            df[col].rolling(window).mean(),
             label=col.replace("_", " "),
             color=COLORS[country],
             linewidth=2.2,
@@ -100,5 +100,6 @@ def visualize_data(df):
     style_ax(ax)
 
     plt.tight_layout()
-    plt.savefig("outputs/fuel_prices.png", dpi=300)
-    plt.close(fig)
+
+    return fig
+
