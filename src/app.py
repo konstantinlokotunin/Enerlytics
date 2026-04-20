@@ -23,7 +23,7 @@ filtered_df = df[
     (df["Date"] <= pd.to_datetime(end_date))
 ]
 
-df["Date"] = df["Date"].dt.strftime("%Y-%m-%d")
+df["Date"] = df["Date"].dt.date
 
 col1, col2, col3 = st.columns(3)
 
