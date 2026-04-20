@@ -41,7 +41,7 @@ def style_ax(ax):
 
 def visualize_data(df, window=4):
 
-    fig, ax = plt.subplots(figsize=(12, 6))
+    fig, ax = plt.subplots(figsize=(16, 7))
 
     # --- COLOR SYSTEM (by country) ---
     COLORS = {
@@ -102,4 +102,3 @@ def visualize_data(df, window=4):
     plt.tight_layout()
 
     return fig
-
