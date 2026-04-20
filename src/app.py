@@ -53,14 +53,14 @@ st.markdown("---")
 
 st.markdown("### 🧠 Insights")
 
-avg_price = filtered_df.iloc[:,1].mean()
+current_price = filtered_df.iloc[0:1]
 
-if avg_price > 2.1:
-    st.warning("Current gasoline prices are highly elevated compared to historical levels.")
-elif 1.7 < avg_price < 2.1:
-    st.warning("Current gasoline prices are elevated compared to historical levels.")
+if current_price > 2.1:
+    st.warning("Current fuel prices are highly elevated compared to historical levels.")
+elif 1.7 < current_price < 2.1:
+    st.warning("Current fuel prices are elevated compared to historical levels.")
 else:
-    st.success("Current gasoline prices are relatively stable compared to historical levels.")
+    st.success("Current fuel prices are relatively stable compared to historical levels.")
 
 st.markdown("---")
 
