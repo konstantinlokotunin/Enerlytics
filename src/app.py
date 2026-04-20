@@ -63,7 +63,6 @@ st.metric(
 )
 
 st.markdown("---")
-)
 
 st.markdown("### 🧠 Insights")
 
