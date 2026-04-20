@@ -6,6 +6,16 @@ from visualization import visualize_data
 
 st.set_page_config(layout="wide")
 
+st.markdown("""
+<style>
+    .stMetric {
+        background-color: #f8fafc;
+        padding: 10px;
+        border-radius: 10px;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 st.title("⚡ Enerlytics Dashboard")
 st.markdown("#### European Energy Market Intelligence")
 
