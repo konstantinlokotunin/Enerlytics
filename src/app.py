@@ -47,7 +47,7 @@ st.markdown("### 📊 Key Metrics")
 
 col1, col2, col3 = st.columns(3)
 
-col1.metric("Average EU Gasoline", f"{df["EU_Gasoline Price (€/L)"].mean():.2f} €/L")
+col1.metric("Average EU Gasoline Price", f"{df["EU_Gasoline Price (€/L)"].mean():.2f} €/L")
 col2.metric("Max Price", f"{df["EU_Gasoline Price (€/L)"].max():.2f} €/L")
 col3.metric("Min Price", f"{df["EU_Gasoline Price (€/L)"].min():.2f} €/L")
 
@@ -57,8 +57,8 @@ previous = df.sort_values("Date", ascending=False).iloc[1]
 delta = latest["EU_Gasoline Price (€/L)"] - previous["EU_Gasoline Price (€/L)"]
 
 st.metric(
-    "EU Gasoline",
-    f"{latest["Current EU_Gasoline Price (€/L)"]:.2f} €/L",
+    "Latest Price",
+    f"{latest["EU_Gasoline Price (€/L)"]:.2f} €/L",
     f"{delta:+.2f} €/L"
 )
 
