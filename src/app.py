@@ -62,6 +62,8 @@ elif 1.7 < avg_price < 2.1:
 else:
     st.success("Current gasoline prices are relatively stable compared to historical levels.")
 
+st.markdown("---")
+
 st.markdown("### 📈 Fuel Price Trends")
 
 fig = visualize_data(filtered_df, window)
