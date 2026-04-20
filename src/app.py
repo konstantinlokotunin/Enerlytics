@@ -22,6 +22,8 @@ st.markdown("#### European Energy Market Intelligence")
 st.markdown("---")
 
 # Load data
+st.cache_data(ttl=3600)
+
 df_raw = extract_data()
 df = transform_data(df_raw)
 
@@ -45,25 +47,37 @@ st.markdown("### 📊 Key Metrics")
 
 col1, col2, col3 = st.columns(3)
 
-col1.metric("Avg EU Gasoline", f"{filtered_df.iloc[:,1].mean():.2f} €/L")
-col2.metric("Max Price", f"{filtered_df.iloc[:,1].max():.2f} €/L")
-col3.metric("Min Price", f"{filtered_df.iloc[:,1].min():.2f} €/L")
+col1.metric("Avg EU Gasoline", f"{df["EU_Gasoline Price (€/L)"].mean():.2f} €/L")
+col2.metric("Max Price", f"{df["EU_Gasoline Price (€/L)"].max():.2f} €/L")
+col3.metric("Min Price", f"{df["EU_Gasoline Price (€/L)"].min():.2f} €/L")
+
+latest = df.sort_values("Date", ascending=False).iloc[0]
+previous = df.sort_values("Date", ascending=False).iloc[1]
+
+delta = latest["EU_Gasoline Price (€/L)"] - previous["EU_Gasoline Price (€/L)"]
+
+st.metric(
+    "EU Gasoline",
+    f"{latest['EU_Gasoline Price (€/L)']:.2f} €/L",
+    f"{delta:+.2f} €/L"
+)
 
 st.markdown("---")
+)
 
 st.markdown("### 🧠 Insights")
 
-current_price = filtered_df.iloc[0, 1]
-avg_price = filtered_df.iloc[:,1].mean()
+latest_price = latest["EU_Gasoline Price (€/L)"]
+avg_price = df["EU_Gasoline Price (€/L)"].mean()
 
-if current_price > avg_price * 1.15:
-    st.warning("Current fuel prices are significantly above historical average.")
-elif avg_price < current_price < avg_price * 1.15:
-    st.warning("Current fuel prices are above historical average.")
-elif avg_price * 0.95 < current_price < avg_price:
-    st.success("Current fuel prices are relatively stable compared to historical levels.")
+if latest_price > avg * 1.15:
+    regime = "High price regime"
+elif latest_price < avg * 0.9:
+    regime = "Low price regime"
 else:
-    st.success("Current fuel prices are well below historical average.")
+    regime = "Normal range"
+
+st.info(f"Market regime: {regime}")
 
 st.markdown("---")
 
@@ -71,6 +85,10 @@ st.markdown("### 📈 Fuel Price Trends")
 
 fig = visualize_data(filtered_df, window)
 st.pyplot(fig, use_container_width=True)
+
+last_date = df["Date"].max()
+
+st.caption(f"🟢 Last updated: {last_date.strftime("%Y-%m-%d")}")
 
 st.markdown("---")
 
