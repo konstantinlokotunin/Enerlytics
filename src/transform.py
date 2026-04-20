@@ -28,12 +28,12 @@ def transform_data(df):
             "EU_price_with_tax_euro95",
             "EU_price_with_tax_diesel",
             "AT_price_with_tax_euro95",
-            "AT_price_with_tax_diesel",
-            "DE_price_with_tax_euro95",
-            "DE_price_with_tax_diesel"]
+            "AT_price_with_tax_diesel"]
     )]
 
     df = df[["Date"] + relevant_cols]
+
+    df[relevant_cols] = df[relevant_cols] / 1000
 
     # --- Rename columns cleanly ---
     rename_col = {
