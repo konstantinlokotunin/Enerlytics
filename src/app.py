@@ -9,7 +9,7 @@ st.set_page_config(layout="wide")
 st.markdown("""
 <style>
     .stMetric {
-        background-color: #f8fafc;
+        background-color: #EDF3FD;
         padding: 10px;
         border-radius: 10px;
     }
