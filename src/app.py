@@ -41,8 +41,6 @@ filtered_df = df[
 
 show_raw = st.sidebar.checkbox("Show Raw Data")
 
-df["Date"] = df["Date"].dt.date
-
 st.markdown("### 📊 Key Metrics")
 
 col1, col2, col3 = st.columns(3)
@@ -87,12 +85,16 @@ st.pyplot(fig, use_container_width=True)
 
 last_date = df["Date"].max()
 
-st.caption(f"🟢 Last updated: {last_date.strftime("%Y-%m-%d")}")
+st.caption(f"🟢 **Last updated:** {last_date.strftime("%Y-%m-%d")}")
 
 st.markdown("---")
 
 if show_raw:
     st.markdown("### 🧾 Raw Data")
-    st.dataframe(filtered_df, use_container_width=True)
+
+    df_display = filtered_df.copy()
+    df_display["Date"] = df_display["Date"].dt.strftime("%Y-%m-%d")
+    
+    st.dataframe(df_display, use_container_width=True)
 
     st.markdown("---")
