@@ -29,12 +29,6 @@ filtered_df = df[
 
 show_raw = st.sidebar.checkbox("Show Raw Data")
 
-if show_raw:
-    st.markdown("### 🧾 Raw Data")
-    st.dataframe(filtered_df, use_container_width=True)
-
-    st.markdown("---")
-
 df["Date"] = df["Date"].dt.date
 
 st.markdown("### 📊 Key Metrics")
@@ -64,3 +58,9 @@ fig = visualize_data(filtered_df, window)
 st.pyplot(fig, use_container_width=True)
 
 st.markdown("---")
+
+if show_raw:
+    st.markdown("### 🧾 Raw Data")
+    st.dataframe(filtered_df, use_container_width=True)
+
+    st.markdown("---")
