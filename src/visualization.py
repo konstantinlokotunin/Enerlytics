@@ -7,7 +7,7 @@ sns.set_theme(style="white", context="talk")
 
 def style_ax(ax):
     # Background
-    ax.set_facecolor("#f8fafc")  # bright snow
+    ax.set_facecolor("#ffffff")  # bright snow
 
     # Grid (subtle, vertical only)
     ax.grid(True, axis="y", color="#9ca3af", linestyle="--", alpha=0.4)
@@ -83,19 +83,19 @@ def visualize_data(df, window=4):
     )
 
     # --- Y RANGE ---
-    y_min = df.drop(columns=["Date"]).min().min()
-    y_max = df.drop(columns=["Date"]).max().max()
+    y_min = df["Date"].min()
+    y_max = df["Date"].max()
     ax.set_ylim(y_min - 0.05, y_max + 0.05)
 
     # --- X AXIS (CLEANER) ---
     ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
 
-    ax.axvspan(pd.Timestamp("2022-02-24"), pd.Timestamp("2023-01-01"),
-        color="#535C65", alpha=0.1, label="Ukraine war")
+    ax.axvspan(pd.Timestamp("2022-02-24"), df["Date"].max(),
+        color="#9ca3af", alpha=0.1, label="Ukraine war")
     
-    ax.axvspan(pd.Timestamp("2026-02-28"), pd.Timestamp("2026-04-13"),
-        color="#535C65", alpha=0.1, label="2026 Iran war")
+    ax.axvspan(pd.Timestamp("2026-02-28"), df["Date"].max(),
+        color="#9ca3af", alpha=0.1, label="2026 Iran war")
 
     style_ax(ax)
 
