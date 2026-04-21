@@ -94,7 +94,7 @@ def visualize_data(df, window=4):
     ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
 
-    ax.axvspan(pd.Timestamp("2022-02-24"), df["Date"].max(),
+    ax.axvspan(pd.Timestamp("2022-02-24"), pd.Timestamp("2023-01-01"),
         color="#9ca3af", alpha=0.1, label="Ukraine war")
     
     ax.axvspan(pd.Timestamp("2026-02-28"), df["Date"].max(),
