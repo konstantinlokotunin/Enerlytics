@@ -83,9 +83,12 @@ def visualize_data(df, window=4):
     )
 
     # --- Y RANGE ---
-    y_min = df["Date"].min()
-    y_max = df["Date"].max()
-    ax.set_ylim(y_min, y_max)
+    for col in df.columns:
+        if col != "Date":
+            y_min = df[col].min().min()
+            y_max = df[col].max().max()
+
+    ax.set_ylim(y_min - 0.05, y_max + 0.05)
 
     # --- X AXIS (CLEANER) ---
     ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
