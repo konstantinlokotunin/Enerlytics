@@ -67,7 +67,7 @@ st.markdown("### 🧠 Insights")
 latest_price = latest["EU_Gasoline Price (€/L)"]
 avg_price = df["EU_Gasoline Price (€/L)"].mean()
 
-if latest_price > avg_price * 1.15:
+if latest_price > avg_price * 1.12:
     regime = "High price regime"
 elif latest_price < avg_price * 0.9:
     regime = "Low price regime"
