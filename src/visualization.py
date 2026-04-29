@@ -41,7 +41,7 @@ def style_ax(ax):
 
 def visualize_data(df, window=4):
 
-    fig, axes = plt.subplots(4, 1, figsize=(16, 14), sharex=True)
+    fig, ax = plt.subplots(4, 1, figsize=(16, 14), sharex=True)
 
     # --- COLOR SYSTEM (by country) ---
     COLORS = {
@@ -49,8 +49,6 @@ def visualize_data(df, window=4):
         "AT": "#FF3366",   # red
         "DE": "#011627"    # black
     }
-
-    ax = axes[0]
 
     # --- PLOT (grouped logic) ---
     relevant_columns = [col for col in df.columns if "EU" in col and col != "Date"]
