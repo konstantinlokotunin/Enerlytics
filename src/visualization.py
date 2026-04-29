@@ -71,7 +71,6 @@ def visualize_data(df, window=4):
             linestyle = ":" # fallback for other types
             alpha = 0.5
 
-    for col in relevant_columns:
         ax1.plot(
             df["Date"],
             df[col],
@@ -81,8 +80,7 @@ def visualize_data(df, window=4):
             alpha=0.2
     )
     
-    for col in relevant_columns:
-            ax1.plot(
+        ax1.plot(
             df["Date"],
             df[col].rolling(window).mean(),
             label=[f"{col} - Rolling Average" for col in relevant_columns],
