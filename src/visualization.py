@@ -39,9 +39,13 @@ def style_ax(ax):
         loc="upper left"
     )
 
-def visualize_data(df, window=4):
+def create_individual_fig(figsize=(10, 5)):
+    """Helper to create a standard figure and axis"""
+    fig, ax = plt.subplots(figsize=figsize)
+    return fig, ax
 
-    fig, axes = plt.subplots(4, 1, figsize=(16, 14), sharex=True)
+
+def visualize_data(df, window=4):
 
     # --- COLOR SYSTEM (by country) ---
     COLORS = {
@@ -50,8 +54,8 @@ def visualize_data(df, window=4):
         "DE": "#011627"    # black
     }
 
-    # --- PLOT (grouped logic) ---
-    ax = axes[0]
+     # --- FIGURE 1: EU Prices ---
+    fig1, ax1 = create_individual_fig()
 
     relevant_columns = [col for col in df.columns if "EU" in col and col != "Date"]
 
@@ -62,7 +66,7 @@ def visualize_data(df, window=4):
         linestyle = "--"
         alpha = 0.9
 
-    ax.plot(
+    ax1.plot(
         df["Date"],
         df[relevant_columns],
         label=relevant_columns,
@@ -71,7 +75,7 @@ def visualize_data(df, window=4):
         alpha=0.2
     )
 
-    ax.plot(
+    ax1.plot(
         df["Date"],
         df[relevant_columns].rolling(window).mean(),
         label=[f"{col} - Rolling Average" for col in relevant_columns],
@@ -82,7 +86,7 @@ def visualize_data(df, window=4):
     )
 
     # --- TITLE ---
-    ax.set_title(
+    ax1.set_title(
         "EU Fuel Prices (Raw vs Smoothed)",
         fontsize=18,
         pad=15,
@@ -97,23 +101,23 @@ def visualize_data(df, window=4):
     y_min = numeric_df.min().min()
     y_max = numeric_df.max().max()
 
-    ax.set_ylim(y_min - 0.05, y_max + 0.05)
+    ax1.set_ylim(y_min - 0.05, y_max + 0.05)
 
     # --- X AXIS ---
-    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+    ax1.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+    ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
 
-    ax.axvspan(pd.Timestamp("2022-02-24"), pd.Timestamp("2023-01-01"),
+    ax1.axvspan(pd.Timestamp("2022-02-24"), pd.Timestamp("2023-01-01"),
         color="#9ca3af", alpha=0.1, label="Ukraine war")
     
-    ax.axvspan(pd.Timestamp("2026-02-28"), df["Date"].max(),
+    ax1.axvspan(pd.Timestamp("2026-02-28"), df["Date"].max(),
         color="#9ca3af", alpha=0.1, label="2026 Iran war")
 
-    style_ax(ax)
+    style_ax(ax1)
 
 
-    # --- PLOT (grouped logic) ---
-    ax = axes[1]
+     # --- FIGURE 2: Volatility ---
+    fig2, ax2 = create_individual_fig()
 
     relevant_columns = [col for col in df.columns if "EU" in col and col != "Date"]
 
@@ -124,7 +128,7 @@ def visualize_data(df, window=4):
         linestyle = "--"
         alpha = 0.9
 
-    ax.plot(
+    ax2.plot(
         df["Date"],
         df[relevant_columns].rolling(window).std(),
         label=f"{relevant_columns} Volatility",
@@ -135,7 +139,7 @@ def visualize_data(df, window=4):
     )
 
     # --- TITLE ---
-    ax.set_title(
+    ax2.set_title(
         "Price Volatility (Rolling Std)",
         fontsize=18,
         pad=15,
@@ -150,37 +154,34 @@ def visualize_data(df, window=4):
     y_min = numeric_df.std().min()
     y_max = numeric_df.std().max()
 
-    ax.set_ylim(y_min - 0.05, y_max + 0.05)
+    ax2.set_ylim(y_min - 0.05, y_max + 0.05)
 
     # --- X AXIS ---
-    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+    ax2.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+    ax2.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
 
-    ax.axvspan(pd.Timestamp("2022-02-24"), pd.Timestamp("2023-01-01"),
+    ax2.axvspan(pd.Timestamp("2022-02-24"), pd.Timestamp("2023-01-01"),
         color="#9ca3af", alpha=0.1, label="Ukraine war")
     
-    ax.axvspan(pd.Timestamp("2026-02-28"), df["Date"].max(),
+    ax2.axvspan(pd.Timestamp("2026-02-28"), df["Date"].max(),
         color="#9ca3af", alpha=0.1, label="2026 Iran war")
 
-    style_ax(ax)
+    style_ax(ax2)
 
 
-    # --- PLOT (grouped logic) ---
-    ax = axes[2]
+     # --- FIGURE 3: AT vs EU Spread ---
+    fig3, ax3 = create_individual_fig()
 
     EU_Petrol = [col for col in df.columns if "EU" in col and "Gasoline" in col]
-
     EU_Diesel = [col for col in df.columns if "EU" in col and "Diesel" in col]
 
     AT_Petrol = [col for col in df.columns if "AT" in col and "Gasoline" in col]
-
     AT_Diesel = [col for col in df.columns if "AT" in col and "Diesel" in col]
 
-    petrol_spread = df[EU_Petrol] - df[AT_Petrol]
+    petrol_spread = df[EU_Petrol].values - df[AT_Petrol].values
+    diesel_spread = df[EU_Diesel].values - df[AT_Diesel].values
 
-    diesel_spread = df[EU_Diesel] - df[AT_Diesel]
-
-    ax.plot(
+    ax3.plot(
         df["Date"],
         petrol_spread,
         label="Gasoline Spread (€/L)",
@@ -188,7 +189,7 @@ def visualize_data(df, window=4):
         alpha=1
     )
 
-    ax.plot(
+    ax3.plot(
         df["Date"],
         diesel_spread,
         label="Diesel Spread (€/L)",
@@ -197,36 +198,41 @@ def visualize_data(df, window=4):
     )
 
     # --- TITLE ---
-    ax.set_title(
+    ax3.set_title(
         "Austria vs EU Price Spread",
         fontsize=18,
         pad=15,
         weight="bold"
     )
 
-    # --- X AXIS ---
-    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+    # --- Y RANGE ---
+    y_min = min(petrol_spread.min(), diesel_spread.min())
+    y_max = max(petrol_spread.max(), diesel_spread.max())
 
-    ax.axvspan(pd.Timestamp("2022-02-24"), pd.Timestamp("2023-01-01"),
+    ax3.set_ylim(y_min - 0.05, y_max + 0.05)
+
+    # --- X AXIS ---
+    ax3.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+    ax3.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+
+    ax3.axvspan(pd.Timestamp("2022-02-24"), pd.Timestamp("2023-01-01"),
         color="#9ca3af", alpha=0.1, label="Ukraine war")
     
-    ax.axvspan(pd.Timestamp("2026-02-28"), df["Date"].max(),
+    ax3.axvspan(pd.Timestamp("2026-02-28"), df["Date"].max(),
         color="#9ca3af", alpha=0.1, label="2026 Iran war")
 
-    style_ax(ax)
+    style_ax(ax3)
 
 
-        # --- PLOT (grouped logic) ---
-    ax = axes[3]
+     # --- FIGURE 4: Product Spread ---
+    fig4, ax4 = create_individual_fig()
 
     EU_Petrol = [col for col in df.columns if "EU" in col and "Gasoline" in col]
-
     EU_Diesel = [col for col in df.columns if "EU" in col and "Diesel" in col]
 
-    eu_spread = df[EU_Petrol] - df[EU_Diesel]
+    eu_spread = df[EU_Petrol].values - df[EU_Diesel].values
 
-    ax.plot(
+    ax4.plot(
         df["Date"],
         eu_spread,
         label="EU Petrol vs Diesel Spread (€/L)",
@@ -235,24 +241,30 @@ def visualize_data(df, window=4):
     )
 
     # --- TITLE ---
-    ax.set_title(
+    ax4.set_title(
         "EU Petrol vs Diesel Spread",
         fontsize=18,
         pad=15,
         weight="bold"
     )
 
-    # --- X AXIS ---
-    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+        # --- Y RANGE ---
+    y_min = eu_spread.min()
+    y_max = eu_spread.max()
 
-    ax.axvspan(pd.Timestamp("2022-02-24"), pd.Timestamp("2023-01-01"),
+    ax4.set_ylim(y_min - 0.05, y_max + 0.05)
+
+    # --- X AXIS ---
+    ax4.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+    ax4.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+
+    ax4.axvspan(pd.Timestamp("2022-02-24"), pd.Timestamp("2023-01-01"),
         color="#9ca3af", alpha=0.1, label="Ukraine war")
     
-    ax.axvspan(pd.Timestamp("2026-02-28"), df["Date"].max(),
+    ax4.axvspan(pd.Timestamp("2026-02-28"), df["Date"].max(),
         color="#9ca3af", alpha=0.1, label="2026 Iran war")
 
-    style_ax(ax)
+    style_ax(ax4)
 
     plt.tight_layout()
 
