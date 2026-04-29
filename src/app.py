@@ -80,8 +80,11 @@ st.markdown("---")
 
 st.markdown("### 📈 Fuel Price Trends")
 
-fig = visualize_data(filtered_df, window)
-st.pyplot(fig, use_container_width=True)
+fig1, fig2, fig3, fig4 = visualize_data(filtered_df, window)
+st.pyplot(fig1)
+st.pyplot(fig2)
+st.pyplot(fig3)
+st.pyplot(fig4)
 
 last_date = df["Date"].max()
 
