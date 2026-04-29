@@ -86,13 +86,13 @@ st.header("Fuel Analysis Dashboard")
 tab1, tab2, tab3, tab4 = st.tabs(["Prices", "Volatility", "Spreads (AT)", "Spreads (EU)"])
 
 with tab1:
-    st.pyplot(fig1)
+    st.pyplot(fig1, use_container_width=True)
 with tab2:
-    st.pyplot(fig2)
+    st.pyplot(fig2, use_container_width=True)
 with tab2:
-    st.pyplot(fig3)
+    st.pyplot(fig3, use_container_width=True)
 with tab2:
-    st.pyplot(fig4)
+    st.pyplot(fig4, use_container_width=True)
 
 last_date = df["Date"].max()
 

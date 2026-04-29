@@ -39,7 +39,7 @@ def style_ax(ax):
         loc="upper left"
     )
 
-def create_individual_fig(figsize=(10, 5)):
+def create_individual_fig(figsize=(10, 7)):
     """Helper to create a standard figure and axis"""
     fig, ax = plt.subplots(figsize=figsize)
     return fig, ax
