@@ -256,4 +256,4 @@ def visualize_data(df, window=4):
 
     plt.tight_layout()
 
-    return fig
+    return fig1, fig2, fig3, fig4
