@@ -41,7 +41,7 @@ def style_ax(ax):
 
 def visualize_data(df, window=4):
 
-    fig, ax = plt.subplots(figsize=(16, 14), sharex=True)
+    fig, axes = plt.subplots(4, 1, figsize=(16, 14), sharex=True)
 
     # --- COLOR SYSTEM (by country) ---
     COLORS = {
@@ -51,6 +51,8 @@ def visualize_data(df, window=4):
     }
 
     # --- PLOT (grouped logic) ---
+    ax = axes[0]
+
     relevant_columns = [col for col in df.columns if "EU" in col and col != "Date"]
 
     if "Gasoline" in relevant_columns:
@@ -96,6 +98,149 @@ def visualize_data(df, window=4):
     y_max = numeric_df.max().max()
 
     ax.set_ylim(y_min - 0.05, y_max + 0.05)
+
+    # --- X AXIS ---
+    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+
+    ax.axvspan(pd.Timestamp("2022-02-24"), pd.Timestamp("2023-01-01"),
+        color="#9ca3af", alpha=0.1, label="Ukraine war")
+    
+    ax.axvspan(pd.Timestamp("2026-02-28"), df["Date"].max(),
+        color="#9ca3af", alpha=0.1, label="2026 Iran war")
+
+    style_ax(ax)
+
+
+    # --- PLOT (grouped logic) ---
+    ax = axes[1]
+
+    relevant_columns = [col for col in df.columns if "EU" in col and col != "Date"]
+
+    if "Gasoline" in relevant_columns:
+        linestyle = "-"
+        alpha = 1
+    else:
+        linestyle = "--"
+        alpha = 0.9
+
+    ax.plot(
+        df["Date"],
+        df[relevant_columns].rolling(window).std(),
+        label=f"{relevant_columns} Volatility",
+        color=COLORS["EU"],
+        linewidth=2.2,
+        linestyle=linestyle,
+        alpha=alpha
+    )
+
+    # --- TITLE ---
+    ax.set_title(
+        "Price Volatility (Rolling Std)",
+        fontsize=18,
+        pad=15,
+        weight="bold"
+    )
+
+    # --- Y RANGE ---
+    relevant_columns = [col for col in df.columns if "EU" in col and col != "Date"]
+
+    numeric_df = df[relevant_columns]       
+
+    y_min = numeric_df.std().min()
+    y_max = numeric_df.std().max()
+
+    ax.set_ylim(y_min - 0.05, y_max + 0.05)
+
+    # --- X AXIS ---
+    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+
+    ax.axvspan(pd.Timestamp("2022-02-24"), pd.Timestamp("2023-01-01"),
+        color="#9ca3af", alpha=0.1, label="Ukraine war")
+    
+    ax.axvspan(pd.Timestamp("2026-02-28"), df["Date"].max(),
+        color="#9ca3af", alpha=0.1, label="2026 Iran war")
+
+    style_ax(ax)
+
+
+    # --- PLOT (grouped logic) ---
+    ax = axes[2]
+
+    EU_Petrol = [col for col in df.columns if "EU" in col and "Gasoline" in col]
+
+    EU_Diesel = [col for col in df.columns if "EU" in col and "Diesel" in col]
+
+    AT_Petrol = [col for col in df.columns if "AT" in col and "Gasoline" in col]
+
+    AT_Diesel = [col for col in df.columns if "AT" in col and "Diesel" in col]
+
+    petrol_spread = df[EU_Petrol] - df[AT_Petrol]
+
+    diesel_spread = df[EU_Diesel] - df[AT_Diesel]
+
+    ax.plot(
+        df["Date"],
+        petrol_spread,
+        label="Gasoline Spread (€/L)",
+        linestyle="-",
+        alpha=1
+    )
+
+    ax.plot(
+        df["Date"],
+        diesel_spread,
+        label="Diesel Spread (€/L)",
+        linestyle="--",
+        alpha=0.9
+    )
+
+    # --- TITLE ---
+    ax.set_title(
+        "Austria vs EU Price Spread",
+        fontsize=18,
+        pad=15,
+        weight="bold"
+    )
+
+    # --- X AXIS ---
+    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+
+    ax.axvspan(pd.Timestamp("2022-02-24"), pd.Timestamp("2023-01-01"),
+        color="#9ca3af", alpha=0.1, label="Ukraine war")
+    
+    ax.axvspan(pd.Timestamp("2026-02-28"), df["Date"].max(),
+        color="#9ca3af", alpha=0.1, label="2026 Iran war")
+
+    style_ax(ax)
+
+
+        # --- PLOT (grouped logic) ---
+    ax = axes[3]
+
+    EU_Petrol = [col for col in df.columns if "EU" in col and "Gasoline" in col]
+
+    EU_Diesel = [col for col in df.columns if "EU" in col and "Diesel" in col]
+
+    eu_spread = df[EU_Petrol] - df[EU_Diesel]
+
+    ax.plot(
+        df["Date"],
+        eu_spread,
+        label="EU Petrol vs Diesel Spread (€/L)",
+        linestyle="-",
+        alpha=1
+    )
+
+    # --- TITLE ---
+    ax.set_title(
+        "EU Petrol vs Diesel Spread",
+        fontsize=18,
+        pad=15,
+        weight="bold"
+    )
 
     # --- X AXIS ---
     ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
