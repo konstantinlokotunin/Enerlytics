@@ -37,7 +37,7 @@ def transform_data(df):
 
     # --- Rename columns cleanly ---
     rename_col = {
-        col: col.split("_")[0] + "_" + ("Diesel Price (€/L)" if "diesel" in col.lower() else "Gasoline Price (€/L)")
+        col: col.split("_")[0] + " " + ("Diesel Price (€/L)" if "diesel" in col.lower() else "Gasoline Price (€/L)")
         for col in relevant_cols
     }
 
