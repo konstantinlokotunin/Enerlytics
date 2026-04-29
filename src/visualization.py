@@ -55,7 +55,7 @@ def visualize_data(df, window=4):
 
     relevant_columns = [col for col in df.columns if "EU" in col and col != "Date"]
 
-    if "Gasoline" in relevant_columns:
+    if any("Gasoline" in col for col in relevant_columns):
         linestyle = "-"
         alpha = 1
     else:
@@ -117,7 +117,7 @@ def visualize_data(df, window=4):
 
     relevant_columns = [col for col in df.columns if "EU" in col and col != "Date"]
 
-    if "Gasoline" in relevant_columns:
+    if any("Gasoline" in col for col in relevant_columns):
         linestyle = "-"
         alpha = 1
     else:
