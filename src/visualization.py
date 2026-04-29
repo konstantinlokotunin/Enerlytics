@@ -77,7 +77,7 @@ def visualize_data(df, window=4):
 
     ax1.plot(
         df["Date"],
-        df[relevant_columns].rolling(window).mean().dropna(),
+        df[relevant_columns].rolling(window).mean(),
         label=[f"{col} - Rolling Average" for col in relevant_columns],
         color=COLORS["EU"],
         linewidth=2.2,
@@ -130,7 +130,7 @@ def visualize_data(df, window=4):
 
     ax2.plot(
         df["Date"],
-        df[relevant_columns].rolling(window).std().dropna(),
+        df[relevant_columns].rolling(window).std(),
         label=f"{relevant_columns} Volatility",
         color=COLORS["EU"],
         linewidth=2.2,
