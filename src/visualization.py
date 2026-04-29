@@ -72,7 +72,7 @@ def visualize_data(df, window=4):
     ax.plot(
         df["Date"],
         df[relevant_columns].rolling(window).mean(),
-        label=f"{relevant_columns} '- Rolling Average'",
+        label=[f"{col} - Rolling Average" for col in relevant_columns],
         color=COLORS["EU"],
         linewidth=2.2,
         linestyle=linestyle,
