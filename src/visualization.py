@@ -59,12 +59,13 @@ def visualize_data(df, window=4):
 
     relevant_columns = [col for col in df.columns if "EU" in col and col != "Date"]
 
-    if any("Gasoline" in col for col in relevant_columns):
-        linestyle = "-"
-        alpha = 1
-    else:
-        linestyle = "--"
-        alpha = 0.9
+    for col in relevant_columns:
+        if "Gasoline" in col:
+            linestyle = "-"
+            alpha = 1
+        else:
+            linestyle = "--"
+            alpha = 0.9
 
     for col in relevant_columns:
         ax1.plot(
@@ -122,12 +123,13 @@ def visualize_data(df, window=4):
 
     relevant_columns = [col for col in df.columns if "EU" in col and col != "Date"]
 
-    if any("Gasoline" in col for col in relevant_columns):
-        linestyle = "-"
-        alpha = 1
-    else:
-        linestyle = "--"
-        alpha = 0.9
+    for col in relevant_columns:
+        if "Gasoline" in col:
+            linestyle = "-"
+            alpha = 1
+        else:
+            linestyle = "--"
+            alpha = 0.9
 
     for col in relevant_columns:
         ax2.plot(
@@ -187,6 +189,7 @@ def visualize_data(df, window=4):
         df["Date"],
         petrol_spread,
         label="Gasoline Spread (€/L)",
+        color=COLORS["EU"],
         linestyle="-",
         alpha=1
     )
@@ -195,13 +198,14 @@ def visualize_data(df, window=4):
         df["Date"],
         diesel_spread,
         label="Diesel Spread (€/L)",
+        color=COLORS["AT"],
         linestyle="--",
         alpha=0.9
     )
 
     # --- TITLE ---
     ax3.set_title(
-        "Austria vs EU Price Spread",
+        "EU vs Austria Price Spread",
         fontsize=18,
         pad=15,
         weight="bold"
