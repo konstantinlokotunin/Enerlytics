@@ -66,13 +66,14 @@ def visualize_data(df, window=4):
         linestyle = "--"
         alpha = 0.9
 
-    ax1.plot(
-        df["Date"],
-        df[relevant_columns],
-        label=relevant_columns,
-        color=COLORS["EU"],
-        linestyle=linestyle,
-        alpha=0.2
+    for col in relevant_columns:
+        ax1.plot(
+            df["Date"],
+            df[col],
+            label=relevant_columns,
+            color=COLORS["EU"],
+            linestyle=linestyle,
+            alpha=0.2
     )
 
     ax1.plot(
@@ -128,14 +129,15 @@ def visualize_data(df, window=4):
         linestyle = "--"
         alpha = 0.9
 
-    ax2.plot(
-        df["Date"],
-        df[relevant_columns].rolling(window).std(),
-        label=f"{relevant_columns} Volatility",
-        color=COLORS["EU"],
-        linewidth=2.2,
-        linestyle=linestyle,
-        alpha=alpha
+    for col in relevant_columns:
+        ax2.plot(
+            df["Date"],
+            df[col].rolling(window).std(),
+            label=f"{relevant_columns} Volatility",
+            color=COLORS["EU"],
+            linewidth=2.2,
+            linestyle=linestyle,
+            alpha=alpha
     )
 
     # --- TITLE ---
@@ -149,10 +151,10 @@ def visualize_data(df, window=4):
     # --- Y RANGE ---
     relevant_columns = [col for col in df.columns if "EU" in col and col != "Date"]
 
-    numeric_df = df[relevant_columns]       
+    rolling_std = df[relevant_columns].rolling(window).std()
 
-    y_min = numeric_df.std().min()
-    y_max = numeric_df.std().max()
+    y_min = rolling_std.min().min()
+    y_max = rolling_std.max().max()
 
     ax2.set_ylim(y_min - 0.05, y_max + 0.05)
 
