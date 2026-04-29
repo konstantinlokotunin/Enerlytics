@@ -81,11 +81,18 @@ st.markdown("---")
 st.markdown("### 📈 Fuel Price Trends")
 
 fig1, fig2, fig3, fig4 = visualize_data(filtered_df, window)
+
 st.header("Fuel Analysis Dashboard")
-st.pyplot(fig1)
-st.pyplot(fig2)
-st.pyplot(fig3)
-st.pyplot(fig4)
+tab1, tab2, tab3, tab4 = st.tabs(["Prices", "Volatility", "Spreads (AT)", "Spreads (EU)"])
+
+with tab1:
+    st.pyplot(fig1)
+with tab2:
+    st.pyplot(fig2)
+with tab2:
+    st.pyplot(fig3)
+with tab2:
+    st.pyplot(fig4)
 
 last_date = df["Date"].max()
 
