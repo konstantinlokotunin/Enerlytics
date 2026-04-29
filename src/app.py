@@ -81,6 +81,7 @@ st.markdown("---")
 st.markdown("### 📈 Fuel Price Trends")
 
 fig1, fig2, fig3, fig4 = visualize_data(filtered_df, window)
+st.header("Fuel Analysis Dashboard")
 st.pyplot(fig1)
 st.pyplot(fig2)
 st.pyplot(fig3)
