@@ -20,7 +20,7 @@ def style_ax(ax):
         ax.spines[spine].set_color("#9ca3af")
 
     # Tick styling
-    ax.tick_params(axis='x', labelsize=11, rotation=30)
+    ax.tick_params(axis='x', labelsize=10, rotation=30)
     ax.tick_params(axis='y', labelsize=12)
 
     # Labels
@@ -39,7 +39,7 @@ def style_ax(ax):
         loc="upper left"
     )
 
-def create_individual_fig(figsize=(10, 7)):
+def create_individual_fig(figsize=(16, 7)):
     """Helper to create a standard figure and axis"""
     fig, ax = plt.subplots(figsize=figsize)
     return fig, ax
@@ -70,7 +70,7 @@ def visualize_data(df, window=4):
         ax1.plot(
             df["Date"],
             df[col],
-            label=relevant_columns,
+            label=col,
             color=COLORS["EU"],
             linestyle=linestyle,
             alpha=0.2
@@ -133,7 +133,7 @@ def visualize_data(df, window=4):
         ax2.plot(
             df["Date"],
             df[col].rolling(window).std(),
-            label=f"{relevant_columns} Volatility",
+            label=f"{col} Volatility",
             color=COLORS["EU"],
             linewidth=2.2,
             linestyle=linestyle,

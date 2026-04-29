@@ -17,6 +17,8 @@ def transform_data(df):
 
     # --- Clean date ---
     df = df.dropna(subset=["Date"])
+    df = df.bfill()
+    
     df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
 
     # --- Filter time range ---

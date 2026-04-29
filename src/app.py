@@ -78,21 +78,20 @@ st.info(f"Market regime: {regime}")
 
 st.markdown("---")
 
-st.markdown("### 📈 Fuel Price Trends")
+st.markdown("### 📈 Fuel Analysis Dashboard")
 
 fig1, fig2, fig3, fig4 = visualize_data(filtered_df, window)
 
-st.header("Fuel Analysis Dashboard")
 tab1, tab2, tab3, tab4 = st.tabs(["Prices", "Volatility", "Spreads (AT)", "Spreads (EU)"])
 
 with tab1:
-    st.pyplot(fig1, use_container_width=True)
+    st.pyplot(fig1, width="stretch")
 with tab2:
-    st.pyplot(fig2, use_container_width=True)
+    st.pyplot(fig2, width="stretch")
 with tab3:
-    st.pyplot(fig3, use_container_width=True)
+    st.pyplot(fig3, width="stretch")
 with tab4:
-    st.pyplot(fig4, use_container_width=True)
+    st.pyplot(fig4, width="stretch")
 
 last_date = df["Date"].max()
 
