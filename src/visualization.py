@@ -60,13 +60,16 @@ def visualize_data(df, window=4):
     relevant_columns = [col for col in df.columns if "EU" in col and col != "Date"]
 
     for col in relevant_columns:
+
         if "Gasoline" in col:
             linestyle = "-"
             alpha = 1
-            
         elif "Diesel" in col:
             linestyle = "--"
             alpha = 0.9
+        else:
+            linestyle = ":" # fallback for other types
+            alpha = 0.5
 
     for col in relevant_columns:
         ax1.plot(
@@ -77,15 +80,16 @@ def visualize_data(df, window=4):
             linestyle=linestyle,
             alpha=0.2
     )
-
-    ax1.plot(
-        df["Date"],
-        df[relevant_columns].rolling(window).mean(),
-        label=[f"{col} - Rolling Average" for col in relevant_columns],
-        color=COLORS["EU"],
-        linewidth=2.2,
-        linestyle=linestyle,
-        alpha=alpha
+    
+    for col in relevant_columns:
+            ax1.plot(
+            df["Date"],
+            df[col].rolling(window).mean(),
+            label=[f"{col} - Rolling Average" for col in relevant_columns],
+            color=COLORS["EU"],
+            linewidth=2.2,
+            linestyle=linestyle,
+            alpha=alpha
     )
 
     # --- TITLE ---
@@ -125,13 +129,16 @@ def visualize_data(df, window=4):
     relevant_columns = [col for col in df.columns if "EU" in col and col != "Date"]
 
     for col in relevant_columns:
+
         if "Gasoline" in col:
             linestyle = "-"
             alpha = 1
-
         elif "Diesel" in col:
             linestyle = "--"
             alpha = 0.9
+        else:
+            linestyle = ":" # fallback for other types
+            alpha = 0.5
 
     for col in relevant_columns:
         ax2.plot(
@@ -244,7 +251,7 @@ def visualize_data(df, window=4):
         df["Date"],
         eu_spread,
         label="EU Petrol vs Diesel Spread (€/L)",
-        linestyle="-",
+        linestyle="--",
         alpha=1
     )
 
