@@ -7,7 +7,7 @@ sns.set_theme(style="white", context="talk")
 
 def style_ax(ax):
     # Background
-    ax.set_facecolor("#f2f7fb")  # bright snow
+    ax.set_facecolor("#fbfbfb")  # bright snow
 
     # Grid (subtle, vertical only)
     ax.grid(True, axis="y", color="#9ca3af", linestyle="--", alpha=0.4)
