@@ -82,7 +82,7 @@ st.markdown("### 📈 Fuel Analysis Dashboard")
 
 fig1, fig2, fig3, fig4 = visualize_data(filtered_df, window)
 
-tab1, tab2, tab3, tab4 = st.tabs(["Prices", "Volatility", "Spreads (AT)", "Spreads (EU)"])
+tab1, tab2, tab3, tab4 = st.tabs(["Prices (EU)", "Volatility (EU)", "Spreads (EU vs AT)", "Spreads (EU Petrol vs EU Diesel)"])
 
 with tab1:
     st.pyplot(fig1, width="stretch")

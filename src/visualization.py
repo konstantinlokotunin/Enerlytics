@@ -63,7 +63,8 @@ def visualize_data(df, window=4):
         if "Gasoline" in col:
             linestyle = "-"
             alpha = 1
-        else:
+            
+        elif "Diesel" in col:
             linestyle = "--"
             alpha = 0.9
 
@@ -127,7 +128,8 @@ def visualize_data(df, window=4):
         if "Gasoline" in col:
             linestyle = "-"
             alpha = 1
-        else:
+
+        elif "Diesel" in col:
             linestyle = "--"
             alpha = 0.9
 
