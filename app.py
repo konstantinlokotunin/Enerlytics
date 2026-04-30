@@ -119,6 +119,6 @@ if show_raw:
     df_display = filtered_df.copy()
     df_display["Date"] = df_display["Date"].dt.strftime("%Y-%m-%d")
     
-    st.dataframe(df_display, use_container_width=True)
+    st.dataframe(df_display, width="stretch")
 
     st.markdown("---")
