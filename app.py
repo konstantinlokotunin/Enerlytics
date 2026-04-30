@@ -17,7 +17,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("""
-# ⚡ Enerlytics
+# ⚡🌍 Enerlytics
 ### European Energy Market Intelligence
 """)
 
@@ -94,16 +94,16 @@ tab1, tab2, tab3, tab4 = st.tabs(["Prices (EU)", "Volatility (EU)", "Spreads (EU
 
 with tab1:
     st.container()
-    st.pyplot(fig1, width="content")
+    st.pyplot(fig1, width="stretch")
 with tab2:
     st.container()
-    st.pyplot(fig2, width="content")
+    st.pyplot(fig2, width="stretch")
 with tab3:
     st.container()
-    st.pyplot(fig3, width="content")
+    st.pyplot(fig3, width="stretch")
 with tab4:
     st.container()
-    st.pyplot(fig4, width="content")
+    st.pyplot(fig4, width="stretch")
 
 last_date = df["Date"].max()
 
