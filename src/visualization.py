@@ -51,7 +51,7 @@ def visualize_data(df, window=4):
     COLORS = {
         "EU": "#2563EB",   # blue
         "AT": "#FF3366",   # red
-        "DE": "#011627"    # black
+        "Tertiary": "#0A0F0D"    # black
     }
 
      # --- FIGURE 1: EU Prices ---
@@ -133,7 +133,7 @@ def visualize_data(df, window=4):
             alpha = 1
         elif "Diesel" in col:
             linestyle = "--"
-            alpha = 0.9
+            alpha = 0.5
         else:
             linestyle = ":" # fallback for other types
             alpha = 0.5
@@ -247,14 +247,15 @@ def visualize_data(df, window=4):
     ax4.plot(
         df["Date"],
         eu_spread,
-        label="EU Petrol vs Diesel Spread (€/L)",
-        linestyle="--",
-        alpha=1
+        label="Fuel Spread (€/L)",
+        color=COLORS["Tertiary"],
+        linestyle="-",
+        alpha=0.9
     )
 
     # --- TITLE ---
     ax4.set_title(
-        "EU Petrol vs Diesel Spread",
+        "EU Petrol vs Diesel Price Spread",
         fontsize=18,
         pad=15,
         weight="bold"

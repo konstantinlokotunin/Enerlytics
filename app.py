@@ -35,9 +35,9 @@ df_raw = get_cached_data()
 # 3. Process the data
 df = transform_data(df_raw)
 
-st.sidebar.markdown("## ⚙️ Controls")
-
-st.sidebar.markdown("### 📊 Analysis")
+st.sidebar.markdown("# ⚙️ Controls")
+st.markdown("---")
+st.sidebar.markdown("### 📊 Adjust your analysis")
 window = st.sidebar.slider("Rolling Window", 1, 12, 4)
 
 st.sidebar.markdown("### 📅 Date Range")
@@ -60,10 +60,10 @@ latest = df.sort_values("Date", ascending=False).iloc[0]
 previous = df.sort_values("Date", ascending=False).iloc[1]
 delta = latest["EU Gasoline Price (€/L)"] - previous["EU Gasoline Price (€/L)"]
 
-col1.metric("Average EU Gasoline Price", f"{df["EU Gasoline Price (€/L)"].mean():.2f} €/L")
-col2.metric("Max Price", f"{df["EU Gasoline Price (€/L)"].max():.2f} €/L")
-col3.metric("Min Price", f"{df["EU Gasoline Price (€/L)"].min():.2f} €/L")
-col4.metric("Latest Price", f"{latest["EU Gasoline Price (€/L)"]:.2f} €/L", f"{delta:+.2f} €/L")
+col1.metric("Latest Price", f"{latest["EU Gasoline Price (€/L)"]:.2f} €/L", f"{delta:+.2f} €/L")
+col2.metric("Average EU Gasoline Price", f"{df["EU Gasoline Price (€/L)"].mean():.2f} €/L")
+col3.metric("Max Price", f"{df["EU Gasoline Price (€/L)"].max():.2f} €/L")
+col4.metric("Min Price", f"{df["EU Gasoline Price (€/L)"].min():.2f} €/L")
 
 st.markdown("---")
 
@@ -91,21 +91,21 @@ tab1, tab2, tab3, tab4 = st.tabs(["Prices (EU)", "Volatility (EU)", "Spreads (EU
 
 with tab1:
     st.container()
-    st.pyplot(fig1, width="stretch")
+    st.pyplot(fig1, width="content")
 with tab2:
     st.container()
-    st.pyplot(fig2, width="stretch")
+    st.pyplot(fig2, width="content")
 with tab3:
     st.container()
-    st.pyplot(fig3, width="stretch")
+    st.pyplot(fig3, width="content")
 with tab4:
     st.container()
-    st.pyplot(fig4, width="stretch")
+    st.pyplot(fig4, width="content")
 
 last_date = df["Date"].max()
 
-st.caption("Data source: EU Weekly Oil Bulletin | Updated daily' \
-"f"🟢 **Last updated:** {last_date.strftime("%Y-%m-%d")}")
+st.caption("**Data source**: EU Weekly Oil Bulletin | Updated daily")
+st.caption('f"🟢 **Last updated:** {last_date.strftime("%Y-%m-%d")}"')
 
 st.markdown("---")
 
