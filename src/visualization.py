@@ -253,7 +253,7 @@ def visualize_data(df, window=4):
         color=COLORS["Tertiary"],
         linewidth=2.5,
         linestyle="-",
-        alpha=0.9
+        alpha=1
     )
 
     # --- TITLE ---
