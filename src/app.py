@@ -22,9 +22,15 @@ st.markdown("#### European Energy Market Intelligence")
 st.markdown("---")
 
 # Load data
-st.cache_data(ttl=3600)
+# 1. Define the cached function
+@st.cache_data(ttl=86400)
+def get_cached_data():
+    return extract_data()
 
-df_raw = extract_data()
+# 2. Call the cached function to get data
+df_raw = get_cached_data()
+
+# 3. Process the data
 df = transform_data(df_raw)
 
 st.sidebar.title("⚙️ Controls")
