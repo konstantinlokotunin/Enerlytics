@@ -108,8 +108,7 @@ with tab4:
 last_date = df["Date"].max()
 
 st.caption(f"""
-    **Data source**: EU Weekly Oil Bulletin | Updated daily  
-    🟢 **Last updated:** {last_date.strftime("%Y-%m-%d")}
+    **Data source**: EU Weekly Oil Bulletin | 🟢 **Last updated:** {last_date.strftime("%Y-%m-%d")}
 """)
 
 if show_raw:
