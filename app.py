@@ -19,7 +19,6 @@ st.markdown("""
 st.markdown("""
 # ⚡ Enerlytics
 ### European Energy Market Intelligence
-
 ---
 """)
 
@@ -105,7 +104,7 @@ with tab4:
 last_date = df["Date"].max()
 
 st.caption("**Data source**: EU Weekly Oil Bulletin | Updated daily")
-st.caption('f"🟢 **Last updated:** {last_date.strftime("%Y-%m-%d")}"')
+st.caption(f"🟢 **Last updated:** {last_date.strftime('%Y-%m-%d')}")
 
 st.markdown("---")
 
