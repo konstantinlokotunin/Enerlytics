@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
-from extract import extract_data
-from transform import transform_data
-from visualization import visualize_data
+from src.extract import extract_data
+from src.transform import transform_data
+from src.visualization import visualize_data
 
 st.set_page_config(layout="wide")
 
