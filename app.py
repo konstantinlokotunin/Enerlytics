@@ -19,7 +19,6 @@ st.markdown("""
 st.markdown("""
 # ⚡ Enerlytics
 ### European Energy Market Intelligence
----
 """)
 
 # Load data
@@ -53,16 +52,21 @@ show_raw = st.sidebar.checkbox("Show Raw Data")
 
 st.markdown("### 📈 Key Metrics")
 
-col1, col2, col3, col4 = st.columns(4)
+col1, col2, col3 = st.columns(3)
 
 latest = df.sort_values("Date", ascending=False).iloc[0]
 previous = df.sort_values("Date", ascending=False).iloc[1]
 delta = latest["EU Gasoline Price (€/L)"] - previous["EU Gasoline Price (€/L)"]
 
-col1.metric("Latest Price", f"{latest["EU Gasoline Price (€/L)"]:.2f} €/L", f"{delta:+.2f} €/L")
-col2.metric("Average EU Gasoline Price", f"{df["EU Gasoline Price (€/L)"].mean():.2f} €/L")
-col3.metric("Max Price", f"{df["EU Gasoline Price (€/L)"].max():.2f} €/L")
-col4.metric("Min Price", f"{df["EU Gasoline Price (€/L)"].min():.2f} €/L")
+st.metric(
+    "Latest EU Gasoline Price",
+    f"{latest['EU_Gasoline Price (€/L)']:.2f} €/L",
+    f"{delta:+.2f} €/L"
+)
+
+col1.metric("Average EU Gasoline Price", f"{df["EU Gasoline Price (€/L)"].mean():.2f} €/L")
+col2.metric("Max Price", f"{df["EU Gasoline Price (€/L)"].max():.2f} €/L")
+col3.metric("Min Price", f"{df["EU Gasoline Price (€/L)"].min():.2f} €/L")
 
 st.markdown("---")
 
@@ -90,7 +94,7 @@ tab1, tab2, tab3, tab4 = st.tabs(["Prices (EU)", "Volatility (EU)", "Spreads (EU
 
 with tab1:
     st.container()
-    st.pyplot(fig1, width="content")
+    st.pyplot(fig1, width="stretch")
 with tab2:
     st.container()
     st.pyplot(fig2, width="content")
@@ -99,16 +103,16 @@ with tab3:
     st.pyplot(fig3, width="content")
 with tab4:
     st.container()
-    st.pyplot(fig4, width="content")
+    st.pyplot(fig4, width=7)
 
 last_date = df["Date"].max()
 
 st.caption("**Data source**: EU Weekly Oil Bulletin | Updated daily")
 st.caption(f"🟢 **Last updated:** {last_date.strftime('%Y-%m-%d')}")
 
-st.markdown("---")
-
 if show_raw:
+
+    st.markdown("---")
     st.markdown("### 🧾 Raw Data")
 
     df_display = filtered_df.copy()
