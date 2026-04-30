@@ -60,7 +60,7 @@ delta = latest["EU Gasoline Price (€/L)"] - previous["EU Gasoline Price (€/L
 
 st.metric(
     "Latest EU Gasoline Price",
-    f"{latest['EU_Gasoline Price (€/L)']:.2f} €/L",
+    f"{latest['EU Gasoline Price (€/L)']:.2f} €/L",
     f"{delta:+.2f} €/L"
 )
 
