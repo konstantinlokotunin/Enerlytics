@@ -207,7 +207,7 @@ def visualize_data(df, window=4):
         label="Diesel Spread (€/L)",
         color=COLORS["AT"],
         linewidth=2.2,
-        linestyle="--",
+        linestyle="-",
         alpha=0.5
     )
 
@@ -253,7 +253,7 @@ def visualize_data(df, window=4):
         color=COLORS["Tertiary"],
         linewidth=2.5,
         linestyle="-",
-        alpha=1
+        alpha=0.9
     )
 
     # --- TITLE ---

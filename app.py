@@ -17,7 +17,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("""
-# ⚡🌍 Enerlytics
+# ⚡ Enerlytics
 ### European Energy Market Intelligence
 """)
 
