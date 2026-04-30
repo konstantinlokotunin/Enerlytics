@@ -196,6 +196,7 @@ def visualize_data(df, window=4):
         petrol_spread,
         label="Gasoline Spread (€/L)",
         color=COLORS["EU"],
+        linewidth=2.2,
         linestyle="-",
         alpha=1
     )
@@ -205,6 +206,7 @@ def visualize_data(df, window=4):
         diesel_spread,
         label="Diesel Spread (€/L)",
         color=COLORS["AT"],
+        linewidth=2.2,
         linestyle="--",
         alpha=0.9
     )
@@ -249,8 +251,9 @@ def visualize_data(df, window=4):
         eu_spread,
         label="Fuel Spread (€/L)",
         color=COLORS["Tertiary"],
+        linewidth=2.2,
         linestyle="-",
-        alpha=0.9
+        alpha=1
     )
 
     # --- TITLE ---

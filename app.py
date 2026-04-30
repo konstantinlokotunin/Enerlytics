@@ -33,9 +33,9 @@ df_raw = get_cached_data()
 # 3. Process the data
 df = transform_data(df_raw)
 
-st.sidebar.markdown("# ⚙️ Controls")
+st.sidebar.markdown("# 📊 Controls")
 st.markdown("---")
-st.sidebar.markdown("### 📊 Adjust your analysis")
+st.sidebar.markdown("### ⚙️ Adjust your analysis")
 window = st.sidebar.slider("Rolling Window", 1, 12, 4)
 
 st.sidebar.markdown("### 📅 Date Range")
@@ -94,7 +94,7 @@ tab1, tab2, tab3, tab4 = st.tabs(["Prices (EU)", "Volatility (EU)", "Spreads (EU
 
 with tab1:
     st.container()
-    st.pyplot(fig1, width="stretch")
+    st.pyplot(fig1, width="content")
 with tab2:
     st.container()
     st.pyplot(fig2, width="content")
@@ -103,12 +103,14 @@ with tab3:
     st.pyplot(fig3, width="content")
 with tab4:
     st.container()
-    st.pyplot(fig4, width=7)
+    st.pyplot(fig4, width="content")
 
 last_date = df["Date"].max()
 
-st.caption("**Data source**: EU Weekly Oil Bulletin | Updated daily")
-st.caption(f"🟢 **Last updated:** {last_date.strftime('%Y-%m-%d')}")
+st.caption(f"""
+    **Data source**: EU Weekly Oil Bulletin | Updated daily  
+    🟢 **Last updated:** {last_date.strftime("%Y-%m-%d")}
+""")
 
 if show_raw:
 
